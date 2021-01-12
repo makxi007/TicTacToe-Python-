@@ -11,7 +11,7 @@ servers:
   - url: 'http://localhost:3000' 
     description: Сервер должен быть запущен на 3000 порту.
 paths:
-  '/file_hashes/{hash}':
+  '/file_hashes/{hash}': 
     get:
       summary: Получение имени файла по хэшу
       tags: []

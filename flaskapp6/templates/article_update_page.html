@@ -1,0 +1,78 @@
+{% extends "main_page2.html" %}
+{% block title %}Articles{% endblock %}
+{% block styles_i %}
+	body{
+		background-image: url("/static/images/image_Planet.jpg"); 
+		background-size: 100%;
+	}
+
+	.articles__content{
+		background-color:rgba(115, 115, 115, 0.8);
+		margin:0 auto;
+		text-align:center;
+		max-width:700px;
+		border:2px black solid;
+		color:white;
+	}
+	#title{
+		background:rgb(30%, 50%, 35%, 0.9);
+		color:white;
+		font-size:20px;
+		margin-bottom:5px;
+		margin-top:5px;
+		width:60%;
+		border:1px solid black;
+	}
+	#intro{
+		background:rgb(30%, 50%, 35%, 0.9);
+		color:white;
+		font-size:18px;
+		margin-bottom:5px;
+		height:100px;
+		width:70%;
+		border:1px solid black;
+	}
+	#text{
+		background:rgb(30%, 50%, 35%, 0.9);
+		color:white;
+		font-size:16px;
+		margin-bottom:5px;
+		height:200px;
+		width:90%;
+		border:1px solid black;
+	}
+	#submit{
+		padding:5px;
+		font-size:20px;
+		border:1px solid black;
+		margin-bottom:5px;
+
+	}
+	#submit:hover{
+		font-size:22px;
+	}
+
+{% endblock%}
+{% block logo %}Update{% endblock %}
+
+{% block nav_links%}
+	<li><a href="{{ url_for('main_page') }}">Main Page</a></li>
+	<li><a href="">Something</a></li>
+	<li><a href="">Something...</a></li>
+	<li><a href="">Something....</a></li>
+{% endblock %}
+
+{% block articles %}
+	
+		<div class="articles__content">
+			<form method="post">
+				<input type="text" name="title" id="title" value="{{ article.title }}"><br>
+				<textarea name="intro" id="intro" cols="30" rows="10">{{ article.intro }}</textarea><br>
+				<textarea name="text" id="text" cols="30" rows="10">{{ article.text }}</textarea><br>
+				<input type="submit" id="submit" value="Submit">
+			</form>
+		</div>
+
+	
+	
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "main_page2.html" %}
+{% block title %}Create Article{% endblock %}
+{% block styles_i %}
+	body{
+		background-image: url("/static/images/image_Planet.jpg"); 
+		background-size: 100%;
+	}
+	.articles__content{
+		
+		margin:0 auto;
+		text-align:center;
+		max-width:500px;
+	}
+
+	.articles__content h1, p{
+		margin:0;
+		padding:0;
+		color:orange;
+	}
+	.articles__content p{
+		font-size:23px;
+		
+	}
+{% endblock%}
+{% block logo %}Create Article{% endblock %}
+
+{% block articles %} 
+
+<div class="articles__content">
+	<form method="post">
+		<h1>Title</h1>
+		<input style="font-size: 25px;" type="text" name="title" id="title"><br>
+		<p>Intro</p>
+		<textarea style="width:80%;height:50px;font-size: 23px;"name="intro" id="intro" cols="30" rows="10"></textarea><br>
+		<p>Main Text</p>
+		<textarea style="width:100%; font-size: 20px;"name="text" id="text" cols="30" rows="10"></textarea><br>
+		<input style="background-color: green;color:orange;padding:15px;font-size:23px;" type="submit" value="Create Article">
+	</form>
+</div>
+{% endblock %}

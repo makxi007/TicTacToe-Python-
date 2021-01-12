@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Simple Page</title>
+	<style type="text/css">
+		body{
+			background:url("https://miro.medium.com/max/14720/0*E0oXyDylhIc78F2q");
+			background-size: 100%;
+		}
+		#header_div{
+			background-color:grey;
+		}
+		.logo{
+			float:left;
+			font-size:30px;
+			margin-left:50px;
+			margin: 0;
+
+		}
+		nav{
+			float:right;
+			margin-left:100px;
+		}
+		nav ul{
+			margin:0;
+			margin-right: 50px;
+			padding: 0;
+			list-style: none;
+		}
+		nav li{
+			
+			display: inline-block;
+		}
+		nav li a {
+			color:red;
+			padding-left:50px;
+			font-size:30px;
+			text-decoration: none;
+		}
+		.container{
+			width:100%;
+			max-width: 1024px;
+			padding: 40px;
+			margin:0 auto;
+		}
+		#main__hello{
+			font-size:40px;
+			color:brown;
+		}
+		#main__text{
+			color:orange;
+			font-size:20px;
+		}
+
+	</style>
+
+	<script type="text/javascript">
+	
+		
+	</script>
+</head>
+
+<body>
+	<header id="header_div">
+		<div class="container">
+			<a href="/" class="logo">MAKSIM</a>
+			<nav>
+				<ul>
+					<li><a href="{{ url_for('contact_page') }}">Contact</a></li>
+					<li><a href="{{ url_for('about_page') }}">More About me</a></li>
+					<li><a href="{{ url_for('prog_lang') }}">Programming langs</a></li>
+				</ul>
+			</nav>
+		</div>	
+	</header>
+
+	<div class = "main">
+		<div class = "container">
+			<h1 id="main__hello">Hello my friend!!!</h1>
+			<p id="main__text">I am a self-development programmer. I try to do this world better. And now I am only in the beginning of my huge journey.</p>
+		</div>
+
+		{% block contact %}
+		
+		{% endblock %}
+	</div>
+</body>
+</html>
