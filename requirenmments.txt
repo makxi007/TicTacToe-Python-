@@ -2,3 +2,5 @@ flask
 pip install Flask
 flask-sqlalchemy
 pip install Flask-SQLAlchemy
+flask auth
+pip install Flask-HTTPAuth
