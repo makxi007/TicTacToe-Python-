@@ -7,6 +7,8 @@ from flask import send_from_directory
 
 import os
 
+from hashes import digest_md5, digest_sha256
+
 UPLOAD_FOLDER = "files"
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg'])
 
@@ -24,9 +26,9 @@ db = SQLAlchemy(app)
 class Users(db.Model):
 	db_id = db.Column(db.Integer, primary_key=True)
 	user_id = db.Column(db.String(100), unique=True, nullable=False)
-	# file_name = db.Column(db.String(100), nullable=False)
-	# sha256sum_hash = db.Column(db.Text)
-	# md5sum_hash = db.Column(db.Text)
+	file_name = db.Column(db.String(100), nullable=False)
+	sha256sum_hash = db.Column(db.Text)
+	md5sum_hash = db.Column(db.Text)
 
 	def __repr__(self):
 		# db_data = {
@@ -36,31 +38,61 @@ class Users(db.Model):
 		# # "sha256sum_hash":self.sha256sum_hash,
 		# # "md5sum_hash":self.md5sum_hash
 		# }
-		return "< Data: %r - %r >" % (self.db_id, self.user_id) 
+		return "< User: %r - %r >" % (self.db_id, self.user_id) 
 
 #If user in db -> Just authorize user
 #If user not in db -> just register user and remember
+
+def allowed_file(filename):
+	return "." in filename and \
+		filename.rsplit(".", 1)[1] in ALLOWED_EXTENSIONS
+
 @app.route("/", methods=["POST", "GET"])
 def main():
 	if request.method == "POST":
 		user_title_id = request.form["title_id"]
+		file = request.files["file"]
 		
 		if_user = Users.query.filter_by(user_id=user_title_id).first()
 
-		if if_user != None:
-			if if_user.user_id == user_title_id:
-				return redirect(url_for("file_hashes"))
+		print(digest_md5(file.filename, path="files"))
+		print(digest_sha256(file.filename, path="files"))
+
+
+		return render_template("flask_test_example.html")
+
+		# if if_user != None:
+		# 	if if_user.user_id == user_title_id:
+
+		# 		if file and allowed_file(file.filename):
+		# 			filename = secure_filename(file.filename)
+		# 			file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+
+		# 			return redirect(url_for('upload_files', filename=filename))
+
+"""
 		if if_user == None:
-			user_to_add = Users(user_id=user_title_id)
-			try:
-				db.session.add(user_to_add)
-				db.session.commit()
-			except Exception as e:
-				print(e)
 
-			return redirect(url_for("file_hashes"))
+			if file and allowed_file(file.filename):
+				filename = secure_filename(file.filename)
+				file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
 
-	return render_template("flask_test_example.html")
+				md5_hash = digest_md5(file.filename)
+				sha256_hash = digest_sha256(file.filename)
+
+				user_to_add = Users(user_id=user_title_id, file_name=file.filename, sha256sum_hash=md5_hash, md5sum_hash=md5_hash)
+
+				try:
+					db.session.add(user_to_add)
+					db.session.commit()
+				except Exception as e:
+					print(e)
+
+				return redirect(url_for('/', filename=filename))
+"""
+
+
+	# return render_template("flask_test_example.html")
 
 #Get data about all users
 @app.route("/all_users")
@@ -68,15 +100,22 @@ def get_all_users():
 	users = Users.query.all()
 	return render_template("all_users.html", all_users=users)
 
-def allowed_file(filename):
-	return "." in filename and \
-		filename.rsplit(".", 1)[1] in ALLOWED_EXTENSIONS
-
-@app.route("/upload_files", methods=["GET", "POST"])
+@app.route("/upload_files/", methods=["GET", "POST"])
 def upload_files():
 	if request.method == "POST":
 		file = request.files["file"]
 		if file and allowed_file(file.filename):
+
+			# print(file.filename)
+			# sha256_file = digest_sha256(file.filename)
+			# md5_file = digest_md5(file.filename)
+			# user_to_add = Users(user_id=user_id, file_name=file.filename,sha256sum_hash=sha256_file, md5sum_hash=md5_file)
+			# try:
+			# 	db.session.add(user_to_add)
+			# 	db.session.commit()
+			# except Exception as e:
+			# 	return f"<h1>{e}</h1>"
+			
 			filename = secure_filename(file.filename)
 			file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
 			return redirect(url_for('upload_files', filename=filename))
@@ -85,7 +124,6 @@ def upload_files():
 @app.route("/upload_files/uploads/<filename>")
 def uploaded_file(filename):
 	return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
-
 
 @app.route("/file_hashes/", methods=["POST", "GET"])
 def file_hashes():

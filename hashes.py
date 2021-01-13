@@ -1,4 +1,5 @@
 from hashlib import sha256, md5
+import os
 
 def digest_message(message):
 	try:
@@ -24,19 +25,31 @@ def digest_message(message):
 	except Exception as e:
 		print(e)
 
-def digest_md5(file):
+def digest_md5(file, path=None):
 	hash_md5 = md5()
-	with open(file, "rb") as file:
-		for chunk in iter(lambda: file.read(4096), b""):
-			hash_md5.update(chunk)
-	return hash_md5.hexdigest()
+	if path != None:
+		with open(os.path.join(path, file), "rb") as file:
+			for chunk in iter(lambda: file.read(4096), b""):
+				hash_md5.update(chunk)
+		return hash_md5.hexdigest()
+	else:
+		with open(file, "rb") as file:
+			for chunk in iter(lambda: file.read(4096), b""):
+				hash_md5.update(chunk)
+		return hash_md5.hexdigest()
 
-def digest_sha256(file):
+def digest_sha256(file, path=None):
 	hash_sha256 = sha256()
-	with open(file, "rb") as file:
-		for chunk in iter(lambda: file.read(4096), b""):
-			hash_sha256.update(chunk)
-	return hash_sha256.hexdigest()
+	if path != None:
+		with open(os.path.join(path, file), "rb") as file:
+			for chunk in iter(lambda: file.read(4096), b""):
+				hash_sha256.update(chunk)
+		return hash_sha256.hexdigest()
+	else:
+		with open(file, "rb") as file:
+			for chunk in iter(lambda: file.read(4096), b""):
+				hash_sha256.update(chunk)
+		return hash_sha256.hexdigest()
 
 def digest_file():
 	file = "text.txt"
@@ -49,4 +62,3 @@ def digest_file():
 	print("SHA256:")
 	print(sha256_digest)
 
-digest_file()
