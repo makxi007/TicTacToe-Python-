@@ -2,15 +2,24 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_httpauth import HTTPBasicAuth
 from flask_sqlalchemy import SQLAlchemy
 
+from werkzeug.utils import secure_filename
+from flask import send_from_directory
+
+import os
+
+UPLOAD_FOLDER = "files"
+ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg'])
+
+
 app = Flask(__name__)
+
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db" 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 #this is files folder where files will be appload
-files_folder = "files"
-
 
 class Users(db.Model):
 	db_id = db.Column(db.Integer, primary_key=True)
@@ -59,6 +68,25 @@ def get_all_users():
 	users = Users.query.all()
 	return render_template("all_users.html", all_users=users)
 
+def allowed_file(filename):
+	return "." in filename and \
+		filename.rsplit(".", 1)[1] in ALLOWED_EXTENSIONS
+
+@app.route("/upload_files", methods=["GET", "POST"])
+def upload_files():
+	if request.method == "POST":
+		file = request.files["file"]
+		if file and allowed_file(file.filename):
+			filename = secure_filename(file.filename)
+			file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+			return redirect(url_for('upload_files', filename=filename))
+	return render_template("upload_files.html")
+
+@app.route("/upload_files/uploads/<filename>")
+def uploaded_file(filename):
+	return send_from_directory(app.config["UPLOAD_FOLDER"], filename)
+
+
 @app.route("/file_hashes/", methods=["POST", "GET"])
 def file_hashes():
 	return "<p>You was authorized/register!</p><br><h1>Hashes page</h1>"
@@ -66,6 +94,7 @@ def file_hashes():
 @app.route("/file_hashes/<int:hash>", methods=["POST", "GET"])
 def file_by_hash(hash):
 	return render_template("file_by_hash.html")
+
 
 
 if __name__ == '__main__':
