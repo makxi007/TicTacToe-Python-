@@ -1,4 +1,0 @@
-for hashing i can implement library hashlib, it goest with python
-https://docs.python.org/3.5/library/hashlib.html
-if with flask
-https://flask-hashing.readthedocs.io/en/latest/

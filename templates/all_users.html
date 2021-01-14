@@ -12,7 +12,9 @@
 		{% for user in all_users %}
 			<div class="user">
 				<p>{{ user }}</p>
-
+				<p>{{ user.file_name }}</p>
+				<p>{{ user.sha256sum_hash }}</p>
+				<p>{{ user.md5sum_hash }}</p>
 			</div>
 
 		{% endfor %}
