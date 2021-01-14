@@ -1,10 +1,10 @@
 # File by hash
-How to use:
-install requirenments with
-pip install requirenments.txt
-or
-load virtual environment
-on Linux
-source api_work/bin/activate
-on Windows
-.\api_work\Scripts\activate
+How to use:<br />
+install requirenments with<br />
+pip install requirenments.txt<br />
+or<br />
+load virtual environment<br />
+on Linux<br />
+source api_work/bin/activate<br />
+on Windows<br />
+.\api_work\Scripts\activate<br />
