@@ -1,16 +1,16 @@
 # File by hash
 How to use:<br />
-install requirenments with<br />
+install requirenments with
 ```
 pip install requirenments.txt<br />
 ```
-or<br />
-load virtual environment<br />
-on Linux<br />
+or
+load virtual environment
+on Linux
 ```
 source api_work/bin/activate<br />
 ```
-on Windows<br />
+on Windows
 ```
 .\api_work\Scripts\activate<br />
 ```
