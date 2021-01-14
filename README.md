@@ -2,7 +2,7 @@
 How to use:<br />
 install requirenments with
 ```
-pip install requirenments.txt
+pip install -r requirements.txt
 ```
 or
 load virtual environment
