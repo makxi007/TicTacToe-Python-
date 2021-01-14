@@ -2,15 +2,15 @@
 How to use:<br />
 install requirenments with
 ```
-pip install requirenments.txt<br />
+pip install requirenments.txt
 ```
 or
 load virtual environment
 on Linux
 ```
-source api_work/bin/activate<br />
+source api_work/bin/activate
 ```
 on Windows
 ```
-.\api_work\Scripts\activate<br />
+.\api_work\Scripts\activate
 ```
