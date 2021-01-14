@@ -17,7 +17,6 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
-
 class Users(db.Model):
 	db_id = db.Column(db.Integer, primary_key=True)
 	user_id = db.Column(db.String(100), unique=True, nullable=False)
